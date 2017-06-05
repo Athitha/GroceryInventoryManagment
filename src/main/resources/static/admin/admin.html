@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css" href="/admin/admin.css">
+</head>
+<body>
+<div id="wrapper" ng-controller="adminController">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h3 style="color: aqua">Admin Panel</h3>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul id="active" class="nav navbar-nav side-nav">
+                <li class="selected"><a ng-click="reload()"><i class="fa fa-bullseye"></i> Dashboard</a></li>
+                <li><a ng-click="openAddItemModal()"><i class="fa fa-tasks"></i> AddItem</a></li>
+                <li><a ng-click="openRemoveModal()"><i class="fa fa-trash"></i> RemoveItems</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right navbar-user" style="padding-right: 40px">
+
+                <li class="dropdown user-dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-logout"></i> Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h3></h3>
+        <hr>
+        <p>Inventory List of items</p>
+        <div uib-alert ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert($index)">{{alert.msg}}</div>
+        <div class="row">
+            <div class="panel panel-primary filterable">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span>Inventory Item details</span>
+                        <span  style="float: right"><a style="color: mediumspringgreen" ng-click="refresh()"><i class="fa fa-refresh"></i>Refresh</a></span>
+                    </h3>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr class="filters">
+                        <th><input type="text" class="form-control" placeholder="Name" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Price" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Quantity" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Description" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Out of Stock" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Checkout Item" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Update Item" disabled></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in itemlist">
+                        <td>{{item.name}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.description}}</td>
+                        <td style="color: orangered">{{item.outofstock}}</td>
+                        <td><a ng-click="checkout(item)" ng-if="item.quantity > 0"><i class="fa fa-shopping-cart"></i> Checkout</a></td>
+                        <td><a ng-click="openUpdateModal(item)"><i class="fa fa-edit"></i> Update</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
